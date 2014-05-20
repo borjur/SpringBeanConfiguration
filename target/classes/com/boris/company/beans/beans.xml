@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	default-destroy-method="destroy" default-init-method="init"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+	<bean id="student" class="com.boris.company.Student"
+		scope="singleton" init-method="creating" destroy-method="destroying"
+		factory-method="getInstance">
+
+	<constructor-arg name="id" value="123" type="int"></constructor-arg>
+	<constructor-arg value="BOris" name="name" type="String"></constructor-arg>
+	<property name="schoolNumber" value="1233"></property>
+	<property name="subject" ref="subject"></property>
+	</bean>
+	
+	
+	<bean id="student2" class="com.boris.company.Student"
+		scope="singleton" init-method="creating" destroy-method="destroying"
+		factory-method="createStudent" factory-bean="studentfactory">
+
+	<constructor-arg name="id" value="234" type="int"></constructor-arg>
+	<constructor-arg value="JOhn" name="name" type="String"></constructor-arg>
+	<property name="schoolNumber" value="4334"></property>
+	<property name="subject" ref="subject"></property>
+	</bean>
+
+	<bean id="subject" class="com.boris.company.Subject">
+		<constructor-arg name="history" value="us history"></constructor-arg>
+		<constructor-arg name="biology" value="Gen Biology"></constructor-arg>
+	</bean>
+	
+		<bean id="subject2" class="com.boris.company.Subject" p:biology="biology homowork" p:history="American">
+		
+	</bean>
+	
+	
+	<bean id="studentfactory"
+		class="com.boris.company.StudentFactory">
+	</bean>
+	
+	<bean id="deparment" class="com.boris.company.Department">
+		<constructor-arg value="Computer Science"></constructor-arg>
+		<constructor-arg>
+			<list>
+				
+				<value>intro CS</value>
+				<value>Data Structures</value>
+				<value>algoritms</value>
+				<value>software engineering</value>
+			</list>
+
+		</constructor-arg>
+	</bean>
+	
+	
+	<bean id="sports" class="com.boris.company.Sports">
+                  <!-- bilo je ref="basketball" -->
+	<property name="best"  >
+	          <!-- inner bean instead of ref="basketball" -->
+			<bean  class="com.boris.company.Team">
+		<property name="name" value="cardinals"></property>
+		<property name="type" value="baseball"></property>
+	</bean>
+	
+	</property>
+	<property name="teams">
+		<list>
+			<ref bean="baseball" />
+			<ref bean="soccer" />
+			<ref bean="basketball" />
+<!-- 			
+			you can have these in the list as well
+			
+				<bean id="basketball" class="com.boris.company.Team">
+		<property name="name" value="Bobcats"></property>
+		<property name="type" value="basketball"></property>
+	</bean>
+	<bean id="soccer" class="com.boris.company.Team">
+		<property name="name" value="Eagles"></property>
+		<property name="type" value="soccer"></property>
+	</bean>
+	<bean id="baseball" class="com.boris.company.Team">
+		<property name="name" value="cardinals"></property>
+		<property name="type" value="baseball"></property>
+	</bean> -->
+			
+		</list>
+	</property>
+	</bean>
+
+
+
+	<bean id="basketball" class="com.boris.company.Team">
+		<property name="name" value="Bobcats"></property>
+		<property name="type" value="basketball"></property>
+	</bean>
+	<bean id="soccer" class="com.boris.company.Team">
+		<property name="name" value="Eagles"></property>
+		<property name="type" value="soccer"></property>
+	</bean>
+	<bean id="baseball" class="com.boris.company.Team">
+		<property name="name" value="cardinals"></property>
+		<property name="type" value="baseball"></property>
+	</bean>
+	
+
+	<bean id="building" class="com.boris.company.Building">
+		<property name="rooms">
+			<props>
+				<prop key="TP 323"> first floor</prop>
+				<prop key="TP 423"> second floor</prop>
+				<prop key="TP 545"> third floor</prop>
+			</props>
+		</property>
+		<property name="teams">
+			<map>
+				<entry key="basketball" value-ref="basketball"></entry>
+				<entry key="soccer" value-ref="soccer"></entry>
+				<entry key="baseball" value-ref="baseball"></entry>
+			</map>
+		</property>
+	</bean>
+</beans>
